@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://c5ls4onuj6v3s"]
+
+[ext_resource type="Theme" uid="uid://bhqbrei3lo5u3" path="res://theme/ui_theme.tres" id="1_theme"]
+[ext_resource type="Script" uid="uid://v1wovwk4k5j8" path="res://scripts/title_screen.gd" id="2_script"]
+
+[node name="TitleScreen" type="Control" unique_id=1477008901]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+script = ExtResource("2_script")
+
+[node name="Background" type="ColorRect" parent="." unique_id=469831003]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.07, 0.08, 0.1, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1487773945]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer" unique_id=1678229072]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBox" unique_id=1851261165]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "コメント削除ゲーム"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="CenterContainer/VBox" unique_id=1946485349]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.77, 1)
+theme_override_font_sizes/font_size = 16
+text = "(タイトルは仮)"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="CenterContainer/VBox" unique_id=1644683999]
+custom_minimum_size = Vector2(280, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 22
+text = "ゲームスタート"
+
+[node name="RulesButton" type="Button" parent="CenterContainer/VBox" unique_id=1420766072]
+custom_minimum_size = Vector2(280, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 18
+text = "ルール説明"
