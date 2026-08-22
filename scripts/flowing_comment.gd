@@ -11,8 +11,19 @@ var comment_type: StringName = &"neutral"
 var speed: float = 0.0
 
 
+func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_STOP
+
+
 func _process(delta: float) -> void:
 	position.x -= speed * delta
 	if position.x + size.x < 0.0:
+		exited.emit(self)
+		queue_free()
+
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		accept_event()
 		exited.emit(self)
 		queue_free()
