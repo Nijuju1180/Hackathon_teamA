@@ -23,11 +23,48 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.07, 0.08, 0.1, 1)
 
+[node name="TitleGroup" type="CenterContainer" parent="." unique_id=1487773944]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 60.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="TitleVBox" type="VBoxContainer" parent="TitleGroup" unique_id=1678229073]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="TitleGroup/TitleVBox" unique_id=1851261165]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "コメント削除ゲーム"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="TitleGroup/TitleVBox" unique_id=1946485349]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.75, 0.77, 1)
+theme_override_font_sizes/font_size = 16
+text = "(タイトルは仮)"
+horizontal_alignment = 1
+
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1487773945]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -80.0
+offset_right = 160.0
+offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -36,20 +73,6 @@ mouse_filter = 2
 layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
-
-[node name="TitleLabel" type="Label" parent="CenterContainer/VBox" unique_id=1851261165]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 48
-text = "コメント削除ゲーム"
-horizontal_alignment = 1
-
-[node name="Subtitle" type="Label" parent="CenterContainer/VBox" unique_id=1946485349]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.75, 0.75, 0.77, 1)
-theme_override_font_sizes/font_size = 16
-text = "(タイトルは仮)"
-horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="CenterContainer/VBox" unique_id=1644683999]
 custom_minimum_size = Vector2(280, 60)

@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" path="res://theme/ui_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/rules_popup.gd" id="2_script"]
+[ext_resource type="Texture2D" path="res://assets/rules-background.PNG" id="3_bg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.98, 0.98, 0.99, 1)
@@ -20,17 +21,7 @@ grow_vertical = 2
 mouse_filter = 0
 script = ExtResource("2_script")
 
-[node name="Dim" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 0
-color = Color(0, 0, 0, 0.6)
-
-[node name="PanelCenter" type="CenterContainer" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,10 +29,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+texture = ExtResource("3_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="PanelCenter" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.4225
+anchor_top = 0.393
+anchor_right = 0.4225
+anchor_bottom = 0.393
+offset_left = -300.0
+offset_top = -170.0
+offset_right = 300.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="Panel" type="PanelContainer" parent="PanelCenter"]
 layout_mode = 2
-custom_minimum_size = Vector2(640, 360)
+custom_minimum_size = Vector2(600, 340)
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="Margin" type="MarginContainer" parent="PanelCenter/Panel"]

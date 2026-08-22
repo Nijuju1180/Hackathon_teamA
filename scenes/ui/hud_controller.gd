@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 ## 制限時間(秒)。progress_barはこの時間の経過を表示するだけで、手動操作はできない。
-@export_range(10.0, 600.0, 1.0) var time_limit_seconds: float = 60.0
+@export_range(10.0, 600.0, 1.0) var time_limit_seconds: float = 5.0
 
 # --- ノード参照 ---
 # ノード名や階層が異なる場合は、シーンツリーからスクリプトへドラッグ＆ドロップしてパスを調整してください

@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://sjdsxcsv65wg" path="res://scenes/ui/hud_controller.gd" id="1_atyv1"]
 [ext_resource type="Script" uid="uid://cyeh6cfnvxvwg" path="res://scripts/comment_layer.gd" id="1_kw0id"]
-[ext_resource type="Script" path="res://scripts/looping_video_background.gd" id="2_bgscript"]
-[ext_resource type="VideoStream" path="res://assets/kawaii.ogv" id="3_bgvideo"]
+[ext_resource type="Script" uid="uid://bo7rbhyaqxjuy" path="res://scripts/looping_video_background.gd" id="2_bgscript"]
+[ext_resource type="VideoStream" uid="uid://d4d4rp70fpu15" path="res://assets/kawaii.ogv" id="3_bgvideo"]
 [ext_resource type="PackedScene" path="res://scenes/result_overlay.tscn" id="4_result"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
@@ -56,10 +56,11 @@ size_flags_vertical = 3
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="MainLayout/RootBox/PlayerArea/VideoScreen" unique_id=1705156972]
-size = Vector2i(996, 689)
+handle_input_locally = false
+size = Vector2i(996, 700)
+render_target_update_mode = 4
 
-[node name="Background" type="VideoStreamPlayer" parent="MainLayout/RootBox/PlayerArea/VideoScreen/SubViewport" unique_id=3050866241]
-layout_mode = 3
+[node name="Background" type="VideoStreamPlayer" parent="MainLayout/RootBox/PlayerArea/VideoScreen/SubViewport" unique_id=-1244101055]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -91,9 +92,11 @@ theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
 show_percentage = false
 
-[node name="Marker" type="Panel" parent="MainLayout/RootBox/PlayerArea/ControlBar/ProgressBar" unique_id=2894571036]
+[node name="Marker" type="Panel" parent="MainLayout/RootBox/PlayerArea/ControlBar/ProgressBar" unique_id=-1400396260]
 custom_minimum_size = Vector2(16, 16)
-size = Vector2(16, 16)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_marker")
 
@@ -107,6 +110,7 @@ layout_mode = 2
 [node name="CommentList" type="ItemList" parent="MainLayout/RootBox/SidePanel/VBoxContainer" unique_id=1150244602]
 layout_mode = 2
 size_flags_vertical = 3
+auto_height = true
 
 [node name="InputHBox" type="HBoxContainer" parent="MainLayout/RootBox/SidePanel/VBoxContainer/CommentList" unique_id=215499900]
 layout_mode = 1
@@ -127,4 +131,4 @@ placeholder_text = "コメントを入力..."
 [node name="Button" type="Button" parent="MainLayout/RootBox/SidePanel/VBoxContainer/CommentList/InputHBox" unique_id=1341561041]
 layout_mode = 2
 
-[node name="ResultOverlay" parent="." instance=ExtResource("4_result")]
+[node name="ResultOverlay" parent="." unique_id=978829060 instance=ExtResource("4_result")]
