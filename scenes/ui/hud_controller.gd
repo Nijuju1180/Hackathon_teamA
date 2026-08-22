@@ -2,11 +2,11 @@ extends CanvasLayer
 
 # --- ノード参照 ---
 # ノード名や階層が異なる場合は、シーンツリーからスクリプトへドラッグ＆ドロップしてパスを調整してください
-@onready var comment_layer = $MainLayout/RootHBox/PlayerArea/VideoScreen/SubViewport/CommentLayer
-@onready var comment_list: ItemList = $MainLayout/RootHBox/SidePanel/SideVBox/CommentList
-@onready var comment_input: LineEdit = $MainLayout/RootHBox/SidePanel/SideVBox/InputHBox/CommentInput
-@onready var send_button: Button = $MainLayout/RootHBox/SidePanel/SideVBox/InputHBox/SendButton
-@onready var progress_bar: Range = $MainLayout/RootHBox/PlayerArea/ControlBar/ProgressBar # HSliderの場合は名前を合わせてください
+@onready var comment_layer = $MainLayout/RootBox/PlayerArea/VideoScreen/SubViewport/commentLayer
+@onready var comment_list: ItemList = $MainLayout/RootBox/SidePanel/VBoxContainer/CommentList
+@onready var comment_input: LineEdit = $MainLayout/RootBox/SidePanel/VBoxContainer/CommentList/InputHBox/CommentInput
+@onready var send_button: Button = $MainLayout/RootBox/SidePanel/VBoxContainer/CommentList/InputHBox/Button
+@onready var progress_bar: Range = $MainLayout/RootBox/PlayerArea/ControlBar/ProgressBar
 
 
 func _ready() -> void:

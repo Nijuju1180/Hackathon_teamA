@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://sjdsxcsv65wg" path="res://scenes/ui/hud_controller.gd" id="1_atyv1"]
 [ext_resource type="Script" uid="uid://cyeh6cfnvxvwg" path="res://scripts/comment_layer.gd" id="1_kw0id"]
+[ext_resource type="Script" path="res://scripts/looping_video_background.gd" id="2_bgscript"]
+[ext_resource type="VideoStream" path="res://assets/kawaii.ogv" id="3_bgvideo"]
 
 [node name="HUD" type="CanvasLayer" unique_id=1740861528]
 script = ExtResource("1_atyv1")
@@ -33,6 +35,19 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="MainLayout/RootBox/PlayerArea/VideoScreen" unique_id=1705156972]
 size = Vector2i(996, 689)
+
+[node name="Background" type="VideoStreamPlayer" parent="MainLayout/RootBox/PlayerArea/VideoScreen/SubViewport" unique_id=3050866241]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stream = ExtResource("3_bgvideo")
+autoplay = true
+expand = true
+script = ExtResource("2_bgscript")
 
 [node name="commentLayer" type="Control" parent="MainLayout/RootBox/PlayerArea/VideoScreen/SubViewport" unique_id=117636081]
 layout_mode = 3
