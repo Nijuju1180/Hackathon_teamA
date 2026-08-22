@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dehxyjfxxs6f3"]
+
+[ext_resource type="Script" uid="uid://cyeh6cfnvxvwg" path="res://scripts/comment_layer.gd" id="1_kw0id"]
+
+[node name="HUD" type="CanvasLayer" unique_id=1740861528]
+
+[node name="commentLayer" type="Control" parent="." unique_id=117636081]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_kw0id")
