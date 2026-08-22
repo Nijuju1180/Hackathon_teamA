@@ -6,6 +6,7 @@ extends Control
 
 signal comment_spawned(comment: FlowingComment)
 signal comment_exited(comment: FlowingComment)
+signal comment_dismissed(comment: FlowingComment)
 
 const TYPE_COLORS := {
 	&"neutral": Color(1.0, 1.0, 1.0),
@@ -106,6 +107,7 @@ func _try_spawn(data: Dictionary) -> bool:
 	comment.size = Vector2(width, _lane_height)
 	comment.position = Vector2(size.x, lane * _lane_height)
 	comment.exited.connect(_on_comment_exited)
+	comment.dismissed.connect(_on_comment_dismissed)
 	add_child(comment)
 
 	_lanes[lane] = comment
@@ -137,6 +139,10 @@ func _pick_free_lane(width: float, speed: float) -> int:
 
 func _on_comment_exited(comment: FlowingComment) -> void:
 	comment_exited.emit(comment)
+
+
+func _on_comment_dismissed(comment: FlowingComment) -> void:
+	comment_dismissed.emit(comment)
 
 
 func _get_label_settings(type: StringName) -> LabelSettings:

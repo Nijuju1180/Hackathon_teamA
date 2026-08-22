@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://sjdsxcsv65wg" path="res://scenes/ui/hud_controller.gd" id="1_atyv1"]
 [ext_resource type="Script" uid="uid://cyeh6cfnvxvwg" path="res://scripts/comment_layer.gd" id="1_kw0id"]
 [ext_resource type="Script" uid="uid://bo7rbhyaqxjuy" path="res://scripts/looping_video_background.gd" id="2_bgscript"]
-[ext_resource type="VideoStream" uid="uid://d4d4rp70fpu15" path="res://assets/kawaii.ogv" id="3_bgvideo"]
+[ext_resource type="VideoStream" path="res://assets/nomal.ogv" id="3_bgvideo"]
 [ext_resource type="PackedScene" path="res://scenes/result_overlay.tscn" id="4_result"]
+[ext_resource type="VideoStream" path="res://assets/horror.ogv" id="5_playingvideo"]
+[ext_resource type="Script" path="res://scripts/reaction_layer.gd" id="6_reaction"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
 bg_color = Color(0.2, 0.2, 0.22, 1)
@@ -26,6 +28,56 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_live_dot"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_live_badge"]
+bg_color = Color(0.92, 0.14, 0.2, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+content_margin_left = 8.0
+content_margin_top = 3.0
+content_margin_right = 8.0
+content_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_bg"]
+bg_color = Color(0.05, 0.05, 0.07, 0.55)
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_playing_frame"]
+bg_color = Color(0.05, 0.05, 0.07, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 0.85)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chat_title"]
+bg_color = Color(0.16, 0.16, 0.19, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
 
 [node name="HUD" type="CanvasLayer" unique_id=1740861528]
 script = ExtResource("1_atyv1")
@@ -50,17 +102,25 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VideoScreen" type="SubViewportContainer" parent="MainLayout/RootBox/PlayerArea" unique_id=208409322]
+[node name="VideoWrapper" type="Control" parent="MainLayout/RootBox/PlayerArea" unique_id=208409321]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="VideoScreen" type="SubViewportContainer" parent="MainLayout/RootBox/PlayerArea/VideoWrapper" unique_id=208409322]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="MainLayout/RootBox/PlayerArea/VideoScreen" unique_id=1705156972]
+[node name="SubViewport" type="SubViewport" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/VideoScreen" unique_id=1705156972]
 handle_input_locally = false
 size = Vector2i(996, 700)
 render_target_update_mode = 4
 
-[node name="Background" type="VideoStreamPlayer" parent="MainLayout/RootBox/PlayerArea/VideoScreen/SubViewport" unique_id=-1244101055]
+[node name="Background" type="VideoStreamPlayer" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/VideoScreen/SubViewport" unique_id=-1244101055]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -72,7 +132,28 @@ autoplay = true
 expand = true
 script = ExtResource("2_bgscript")
 
-[node name="commentLayer" type="Control" parent="MainLayout/RootBox/PlayerArea/VideoScreen/SubViewport" unique_id=117636081]
+[node name="PlayingGameFrame" type="PanelContainer" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/VideoScreen/SubViewport" unique_id=-1244101056]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -180.0
+offset_right = 280.0
+offset_bottom = -20.0
+grow_horizontal = 1
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_playing_frame")
+
+[node name="PlayingGameScreen" type="VideoStreamPlayer" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/VideoScreen/SubViewport/PlayingGameFrame" unique_id=-1244101057]
+layout_mode = 2
+mouse_filter = 2
+stream = ExtResource("5_playingvideo")
+autoplay = true
+expand = true
+script = ExtResource("2_bgscript")
+
+[node name="commentLayer" type="Control" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/VideoScreen/SubViewport" unique_id=117636081]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,24 +162,132 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kw0id")
 
+[node name="ReactionLayer" type="Control" parent="MainLayout/RootBox/PlayerArea/VideoWrapper" unique_id=208409323]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("6_reaction")
+
+[node name="StreamHeader" type="PanelContainer" parent="MainLayout/RootBox/PlayerArea/VideoWrapper" unique_id=208409324]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_header_bg")
+
+[node name="HeaderRow" type="HBoxContainer" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader" unique_id=208409325]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LiveBadge" type="PanelContainer" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader/HeaderRow" unique_id=208409326]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_live_badge")
+
+[node name="LiveBadgeRow" type="HBoxContainer" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader/HeaderRow/LiveBadge" unique_id=208409327]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="LiveDot" type="Panel" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader/HeaderRow/LiveBadge/LiveBadgeRow" unique_id=208409328]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_live_dot")
+
+[node name="LiveLabel" type="Label" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader/HeaderRow/LiveBadge/LiveBadgeRow" unique_id=208409329]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "LIVE"
+
+[node name="ChannelLabel" type="Label" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader/HeaderRow" unique_id=208409330]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "配信チャンネル"
+
+[node name="HeaderSpacer" type="Control" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader/HeaderRow" unique_id=208409331]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ViewerRow" type="HBoxContainer" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader/HeaderRow" unique_id=208409332]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+
+[node name="ViewerIcon" type="Label" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader/HeaderRow/ViewerRow" unique_id=208409333]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "👁"
+
+[node name="ViewerCountLabel" type="Label" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader/HeaderRow/ViewerRow" unique_id=208409334]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "128人視聴中"
+
+[node name="ElapsedLabel" type="Label" parent="MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader/HeaderRow" unique_id=208409335]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.85, 0.85, 0.88, 1)
+text = "00:00"
+
 [node name="ControlBar" type="PanelContainer" parent="MainLayout/RootBox/PlayerArea" unique_id=767562602]
 layout_mode = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="MainLayout/RootBox/PlayerArea/ControlBar" unique_id=587186703]
+[node name="ControlRow" type="HBoxContainer" parent="MainLayout/RootBox/PlayerArea/ControlBar" unique_id=767562603]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PlayIcon" type="Label" parent="MainLayout/RootBox/PlayerArea/ControlBar/ControlRow" unique_id=767562604]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 18
+text = "▶"
+
+[node name="ProgressBar" type="ProgressBar" parent="MainLayout/RootBox/PlayerArea/ControlBar/ControlRow" unique_id=587186703]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
 show_percentage = false
 
-[node name="Marker" type="Panel" parent="MainLayout/RootBox/PlayerArea/ControlBar/ProgressBar" unique_id=-1400396260]
+[node name="Marker" type="Panel" parent="MainLayout/RootBox/PlayerArea/ControlBar/ControlRow/ProgressBar" unique_id=-1400396260]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 0
 offset_right = 16.0
 offset_bottom = 16.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_marker")
+
+[node name="LikeButton" type="Button" parent="MainLayout/RootBox/PlayerArea/ControlBar/ControlRow" unique_id=767562605]
+layout_mode = 2
+size_flags_vertical = 4
+text = "♥ いいね"
+
+[node name="ShareIcon" type="Label" parent="MainLayout/RootBox/PlayerArea/ControlBar/ControlRow" unique_id=767562606]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 18
+text = "↗"
+
+[node name="VolumeIcon" type="Label" parent="MainLayout/RootBox/PlayerArea/ControlBar/ControlRow" unique_id=767562607]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 18
+text = "🔊"
 
 [node name="SidePanel" type="PanelContainer" parent="MainLayout/RootBox" unique_id=1838214493]
 custom_minimum_size = Vector2(280, 0)
@@ -107,27 +296,29 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="MainLayout/RootBox/SidePanel" unique_id=642248562]
 layout_mode = 2
 
+[node name="ChatTitle" type="PanelContainer" parent="MainLayout/RootBox/SidePanel/VBoxContainer" unique_id=642248563]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_chat_title")
+
+[node name="ChatTitleLabel" type="Label" parent="MainLayout/RootBox/SidePanel/VBoxContainer/ChatTitle" unique_id=642248564]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "💬 コメント"
+
 [node name="CommentList" type="ItemList" parent="MainLayout/RootBox/SidePanel/VBoxContainer" unique_id=1150244602]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="InputHBox" type="HBoxContainer" parent="MainLayout/RootBox/SidePanel/VBoxContainer/CommentList" unique_id=215499900]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 690.0
-offset_right = -32.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="InputHBox" type="HBoxContainer" parent="MainLayout/RootBox/SidePanel/VBoxContainer" unique_id=215499900]
+layout_mode = 2
+theme_override_constants/separation = 8
 
-[node name="CommentInput" type="LineEdit" parent="MainLayout/RootBox/SidePanel/VBoxContainer/CommentList/InputHBox" unique_id=984912251]
+[node name="CommentInput" type="LineEdit" parent="MainLayout/RootBox/SidePanel/VBoxContainer/InputHBox" unique_id=984912251]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "コメントを入力..."
 
-[node name="Button" type="Button" parent="MainLayout/RootBox/SidePanel/VBoxContainer/CommentList/InputHBox" unique_id=1341561041]
+[node name="Button" type="Button" parent="MainLayout/RootBox/SidePanel/VBoxContainer/InputHBox" unique_id=1341561041]
 layout_mode = 2
 
 [node name="ResultOverlay" parent="." unique_id=978829060 instance=ExtResource("4_result")]

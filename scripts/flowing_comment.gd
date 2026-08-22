@@ -4,6 +4,8 @@ extends Label
 ## 生成・レーン割り当ては CommentLayer が行う。
 
 signal exited(comment: FlowingComment)
+## クリックされて途中で消されたときに発火する(画面外に流れ切っただけの場合は発火しない)
+signal dismissed(comment: FlowingComment)
 
 ## 種別。"fan" / "tease" / "anti" / "neutral"。ゲーム側の判定に使う。
 var comment_type: StringName = &"neutral"
@@ -25,5 +27,6 @@ func _process(delta: float) -> void:
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		accept_event()
+		dismissed.emit(self)
 		exited.emit(self)
 		queue_free()
