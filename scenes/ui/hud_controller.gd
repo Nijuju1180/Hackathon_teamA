@@ -25,6 +25,8 @@ var _elapsed: float = 0.0
 var _time_up: bool = false
 var _viewer_count: int
 var _viewer_count_accum: float = 0.0
+var _deleted_counts: Dictionary = {}
+var _survived_counts: Dictionary = {}
 
 
 func _ready() -> void:
@@ -32,6 +34,7 @@ func _ready() -> void:
 	if is_instance_valid(comment_layer):
 		comment_layer.comment_spawned.connect(_on_comment_spawned)
 		comment_layer.comment_dismissed.connect(_on_comment_dismissed)
+		comment_layer.comment_exited.connect(_on_comment_exited)
 
 	# 2. コメント送信ボタン・Enterキーの接続
 	if is_instance_valid(send_button):
@@ -73,8 +76,10 @@ func _process(delta: float) -> void:
 
 	if _elapsed >= time_limit_seconds:
 		_time_up = true
+		if is_instance_valid(comment_layer):
+			comment_layer.finish()
 		if is_instance_valid(result_overlay):
-			result_overlay.show_result()
+			result_overlay.show_result(_deleted_counts, _survived_counts)
 
 
 ## progress_barの現在値に合わせて、丸マーカーをバー上の対応位置に置く。
@@ -111,6 +116,11 @@ func _start_live_dot_blink() -> void:
 func _on_like_pressed() -> void:
 	if is_instance_valid(reaction_layer):
 		reaction_layer.spawn_heart()
+
+
+func _on_comment_exited(comment: FlowingComment, deleted: bool) -> void:
+	var counts := _deleted_counts if deleted else _survived_counts
+	counts[comment.comment_type] = counts.get(comment.comment_type, 0) + 1
 
 
 func _on_comment_spawned(comment: FlowingComment) -> void:
