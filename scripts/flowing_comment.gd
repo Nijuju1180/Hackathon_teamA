@@ -3,7 +3,7 @@ extends Label
 ## 画面を右から左へ流れる1件のコメント。
 ## 生成・レーン割り当ては CommentLayer が行う。
 
-signal exited(comment: FlowingComment)
+signal exited(comment: FlowingComment, deleted: bool)
 
 ## 種別。"fan" / "tease" / "anti" / "neutral"。ゲーム側の判定に使う。
 var comment_type: StringName = &"neutral"
@@ -18,12 +18,18 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	position.x -= speed * delta
 	if position.x + size.x < 0.0:
-		exited.emit(self)
+		exited.emit(self, false)
 		queue_free()
 
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		accept_event()
-		exited.emit(self)
+		exited.emit(self, true)
 		queue_free()
+
+
+## 時間切れなどで強制的に「生存」扱いにして消す。
+func force_expire() -> void:
+	exited.emit(self, false)
+	queue_free()

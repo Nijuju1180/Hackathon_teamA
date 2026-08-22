@@ -5,7 +5,7 @@ extends Control
 ##   空きレーンが無ければ待機列に積み、空き次第流す。
 
 signal comment_spawned(comment: FlowingComment)
-signal comment_exited(comment: FlowingComment)
+signal comment_exited(comment: FlowingComment, deleted: bool)
 
 const TYPE_COLORS := {
 	&"neutral": Color(1.0, 1.0, 1.0),
@@ -135,8 +135,17 @@ func _pick_free_lane(width: float, speed: float) -> int:
 	return free_lanes[randi() % free_lanes.size()]
 
 
-func _on_comment_exited(comment: FlowingComment) -> void:
-	comment_exited.emit(comment)
+func _on_comment_exited(comment: FlowingComment, deleted: bool) -> void:
+	comment_exited.emit(comment, deleted)
+
+
+## ゲーム終了処理。生成を止め、待機列を破棄し、飛行中のコメントは全て「生存」扱いで消す。
+func finish() -> void:
+	running = false
+	_pending.clear()
+	for comment in _lanes:
+		if is_instance_valid(comment):
+			comment.force_expire()
 
 
 func _get_label_settings(type: StringName) -> LabelSettings:

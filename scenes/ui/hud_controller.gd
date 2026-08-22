@@ -15,12 +15,15 @@ extends CanvasLayer
 
 var _elapsed: float = 0.0
 var _time_up: bool = false
+var _deleted_counts: Dictionary = {}
+var _survived_counts: Dictionary = {}
 
 
 func _ready() -> void:
 	# 1. コメント生成シグナルの接続（流れたコメントを右側リストにも反映）
 	if is_instance_valid(comment_layer):
 		comment_layer.comment_spawned.connect(_on_comment_spawned)
+		comment_layer.comment_exited.connect(_on_comment_exited)
 
 	# 2. コメント送信ボタン・Enterキーの接続
 	if is_instance_valid(send_button):
@@ -44,8 +47,10 @@ func _process(delta: float) -> void:
 		_update_marker()
 	if _elapsed >= time_limit_seconds:
 		_time_up = true
+		if is_instance_valid(comment_layer):
+			comment_layer.finish()
 		if is_instance_valid(result_overlay):
-			result_overlay.show_result()
+			result_overlay.show_result(_deleted_counts, _survived_counts)
 
 
 ## progress_barの現在値に合わせて、丸マーカーをバー上の対応位置に置く。
@@ -58,6 +63,11 @@ func _update_marker() -> void:
 	var x := progress_bar.size.x * ratio - progress_marker.size.x / 2.0
 	var y := (progress_bar.size.y - progress_marker.size.y) / 2.0
 	progress_marker.position = Vector2(x, y)
+
+
+func _on_comment_exited(comment: FlowingComment, deleted: bool) -> void:
+	var counts := _deleted_counts if deleted else _survived_counts
+	counts[comment.comment_type] = counts.get(comment.comment_type, 0) + 1
 
 
 func _on_comment_spawned(comment: FlowingComment) -> void:
