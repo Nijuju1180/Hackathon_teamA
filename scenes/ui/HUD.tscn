@@ -110,7 +110,6 @@ layout_mode = 2
 [node name="CommentList" type="ItemList" parent="MainLayout/RootBox/SidePanel/VBoxContainer" unique_id=1150244602]
 layout_mode = 2
 size_flags_vertical = 3
-auto_height = true
 
 [node name="InputHBox" type="HBoxContainer" parent="MainLayout/RootBox/SidePanel/VBoxContainer/CommentList" unique_id=215499900]
 layout_mode = 1
