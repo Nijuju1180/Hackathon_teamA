@@ -1,0 +1,56 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://theme/ui_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/result_overlay.gd" id="2_script"]
+
+[node name="ResultOverlay" type="ColorRect"]
+theme = ExtResource("1_theme")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.78)
+script = ExtResource("2_script")
+
+[node name="ResultCenter" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="ResultCenter"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="ResultTitle" type="Label" parent="ResultCenter/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 40
+text = "リザルト"
+horizontal_alignment = 1
+
+[node name="ResultSub" type="Label" parent="ResultCenter/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.82, 1)
+theme_override_font_sizes/font_size = 16
+text = "(評価内容は今後実装予定)"
+horizontal_alignment = 1
+
+[node name="RetryButton" type="Button" parent="ResultCenter/VBox"]
+custom_minimum_size = Vector2(240, 56)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "もういちど"
+
+[node name="TitleButton" type="Button" parent="ResultCenter/VBox"]
+custom_minimum_size = Vector2(240, 56)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "タイトルに戻る"

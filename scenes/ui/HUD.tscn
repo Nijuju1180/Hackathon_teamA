@@ -4,6 +4,28 @@
 [ext_resource type="Script" uid="uid://cyeh6cfnvxvwg" path="res://scripts/comment_layer.gd" id="1_kw0id"]
 [ext_resource type="Script" path="res://scripts/looping_video_background.gd" id="2_bgscript"]
 [ext_resource type="VideoStream" path="res://assets/kawaii.ogv" id="3_bgvideo"]
+[ext_resource type="PackedScene" path="res://scenes/result_overlay.tscn" id="4_result"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
+bg_color = Color(0.2, 0.2, 0.22, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(0.95, 0.15, 0.2, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_marker"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="HUD" type="CanvasLayer" unique_id=1740861528]
 script = ExtResource("1_atyv1")
@@ -62,10 +84,18 @@ script = ExtResource("1_kw0id")
 layout_mode = 2
 
 [node name="ProgressBar" type="ProgressBar" parent="MainLayout/RootBox/PlayerArea/ControlBar" unique_id=587186703]
+custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+show_percentage = false
 
-[node name="HSlider" type="HSlider" parent="MainLayout/RootBox/PlayerArea/ControlBar" unique_id=1691928239]
-layout_mode = 2
+[node name="Marker" type="Panel" parent="MainLayout/RootBox/PlayerArea/ControlBar/ProgressBar" unique_id=2894571036]
+custom_minimum_size = Vector2(16, 16)
+size = Vector2(16, 16)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_marker")
 
 [node name="SidePanel" type="PanelContainer" parent="MainLayout/RootBox" unique_id=1838214493]
 custom_minimum_size = Vector2(280, 0)
@@ -96,3 +126,5 @@ placeholder_text = "コメントを入力..."
 
 [node name="Button" type="Button" parent="MainLayout/RootBox/SidePanel/VBoxContainer/CommentList/InputHBox" unique_id=1341561041]
 layout_mode = 2
+
+[node name="ResultOverlay" parent="." instance=ExtResource("4_result")]
