@@ -20,6 +20,8 @@ extends CanvasLayer
 @onready var live_dot: Control = $MainLayout/RootBox/PlayerArea/VideoWrapper/StreamHeader/HeaderRow/LiveBadge/LiveBadgeRow/LiveDot
 @onready var like_button: Button = $MainLayout/RootBox/PlayerArea/ControlBar/ControlRow/LikeButton
 @onready var reaction_layer = $MainLayout/RootBox/PlayerArea/VideoWrapper/ReactionLayer
+@onready var background_video: VideoStreamPlayer = $MainLayout/RootBox/PlayerArea/VideoWrapper/VideoScreen/SubViewport/Background
+@onready var playing_game_video: VideoStreamPlayer = $MainLayout/RootBox/PlayerArea/VideoWrapper/VideoScreen/SubViewport/PlayingGameFrame/PlayingGameScreen
 
 var _elapsed: float = 0.0
 var _time_up: bool = false
@@ -76,6 +78,7 @@ func _process(delta: float) -> void:
 
 	if _elapsed >= time_limit_seconds:
 		_time_up = true
+		_stop_videos()
 		if is_instance_valid(comment_layer):
 			comment_layer.finish()
 		if is_instance_valid(result_overlay):
@@ -92,6 +95,14 @@ func _update_marker() -> void:
 	var x := progress_bar.size.x * ratio - progress_marker.size.x / 2.0
 	var y := (progress_bar.size.y - progress_marker.size.y) / 2.0
 	progress_marker.position = Vector2(x, y)
+
+
+## 配信終了後も裏でデコードと音声が回り続けるため、時間切れで両方止める。
+func _stop_videos() -> void:
+	if is_instance_valid(background_video):
+		background_video.stop()
+	if is_instance_valid(playing_game_video):
+		playing_game_video.stop()
 
 
 func _update_viewer_count_label() -> void:
