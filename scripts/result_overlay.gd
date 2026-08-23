@@ -30,7 +30,7 @@ func show_result(deleted_counts: Dictionary, survived_counts: Dictionary) -> voi
 
 	# 出現前も VBox 内の場所は確保させ、段が増えても既出の段が動かないようにする
 	for step in _steps():
-		step.modulate.a = 0.0
+		step[0].modulate.a = 0.0
 	_set_buttons_enabled(false)
 
 	modulate.a = 0.0
@@ -38,14 +38,24 @@ func show_result(deleted_counts: Dictionary, survived_counts: Dictionary) -> voi
 	var tween := create_tween()
 	tween.tween_property(self, "modulate:a", 1.0, FADE_IN_SECONDS)
 	for step in _steps():
+		var node: CanvasItem = step[0]
+		var sound: StringName = step[1]
 		tween.tween_interval(STEP_DELAY_SECONDS)
-		tween.tween_property(step, "modulate:a", 1.0, STEP_FADE_SECONDS)
+		if sound != &"":
+			tween.tween_callback(Sfx.play.bind(sound))
+		tween.tween_property(node, "modulate:a", 1.0, STEP_FADE_SECONDS)
 	tween.tween_callback(_set_buttons_enabled.bind(true))
 
 
-## 表示する順番そのもの
-func _steps() -> Array[CanvasItem]:
-	var steps: Array[CanvasItem] = [_result_title, _judge_title, _judge_sub, _button_box]
+## 表示する順番そのもの。[表示する段, 出現に合わせて鳴らす効果音] の並び。
+## 効果音が空の段は無音(ボタンは押したときに決定音が鳴る)。
+func _steps() -> Array[Array]:
+	var steps: Array[Array] = [
+		[_result_title, &"pop"],
+		[_judge_title, &"pop"],
+		[_judge_sub, &"cheer"],
+		[_button_box, &""],
+	]
 	return steps
 
 
