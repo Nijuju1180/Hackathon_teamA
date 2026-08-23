@@ -4,6 +4,9 @@ extends Control
 
 signal closed
 
+## 開閉時のフェード秒数
+const FADE_SECONDS := 0.25
+
 @export var pages: Array[String] = [
 	"画面に流れてくるコメントを、制限時間内にクリックして消していこう。",
 	"消したコメントのジャンルによって、チャンネルの評価が変わるよ。",
@@ -16,28 +19,44 @@ signal closed
 @onready var _next_button: Button = $PanelCenter/Panel/Margin/VBox/ButtonRow/NextButton
 
 var _page_index: int = 0
+var _closing: bool = false
 
 
 func _ready() -> void:
 	_back_button.pressed.connect(_on_back_pressed)
 	_next_button.pressed.connect(_on_next_pressed)
 	_update_page()
+	modulate.a = 0.0
+	create_tween().tween_property(self, "modulate:a", 1.0, FADE_SECONDS)
 
 
 func _on_back_pressed() -> void:
-	if _page_index <= 0:
+	if _closing or _page_index <= 0:
 		return
 	_page_index -= 1
 	_update_page()
 
 
 func _on_next_pressed() -> void:
+	if _closing:
+		return
 	if _page_index >= pages.size() - 1:
-		closed.emit()
-		queue_free()
+		_close()
 		return
 	_page_index += 1
 	_update_page()
+
+
+func _close() -> void:
+	_closing = true
+	# フェードアウト中の再クリックを防ぐ
+	_back_button.disabled = true
+	_next_button.disabled = true
+	var tween := create_tween()
+	tween.tween_property(self, "modulate:a", 0.0, FADE_SECONDS)
+	await tween.finished
+	closed.emit()
+	queue_free()
 
 
 func _update_page() -> void:
