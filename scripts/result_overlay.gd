@@ -9,6 +9,7 @@ const STEP_FADE_SECONDS := 0.4
 ## 前の段が出てから次の段が出るまでの待ち時間
 const STEP_DELAY_SECONDS := 0.5
 
+@onready var _background: TextureRect = $Background
 @onready var _result_title: Label = $ResultCenter/VBox/ResultTitle
 @onready var _judge_title: Label = $ResultCenter/VBox/ResultJudgeTitle
 @onready var _judge_sub: Label = $ResultCenter/VBox/ResultSub
@@ -27,6 +28,7 @@ func show_result(deleted_counts: Dictionary, survived_counts: Dictionary) -> voi
 	var judgement := ResultJudge.judge(deleted_counts, survived_counts)
 	_judge_title.text = judgement.title
 	_judge_sub.text = judgement.description
+	_background.texture = load(judgement.background) as Texture2D
 
 	# 出現前も VBox 内の場所は確保させ、段が増えても既出の段が動かないようにする
 	for step in _steps():

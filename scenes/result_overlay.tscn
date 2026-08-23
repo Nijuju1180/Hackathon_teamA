@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" path="res://theme/ui_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/result_overlay.gd" id="2_script"]
+[ext_resource type="Texture2D" path="res://assets/nomalresult.PNG" id="3_background"]
 
 [node name="ResultOverlay" type="ColorRect"]
 theme = ExtResource("1_theme")
@@ -10,10 +11,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.78)
+color = Color(0, 0, 0, 0)
 script = ExtResource("2_script")
 
-[node name="ResultCenter" type="CenterContainer" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,32 +22,48 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+texture = ExtResource("3_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ResultCenter" type="CenterContainer" parent="."]
+layout_mode = 1
+anchor_left = 0.4427
+anchor_top = 0.1019
+anchor_right = 0.974
+anchor_bottom = 0.6991
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="VBox" type="VBoxContainer" parent="ResultCenter"]
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
 
 [node name="ResultTitle" type="Label" parent="ResultCenter/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.12, 0.12, 0.16, 1)
 theme_override_font_sizes/font_size = 40
 text = "リザルト"
 horizontal_alignment = 1
 
 [node name="ResultJudgeTitle" type="Label" parent="ResultCenter/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_colors/font_color = Color(0.85, 0.18, 0.24, 1)
 theme_override_font_sizes/font_size = 26
 text = ""
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="ResultSub" type="Label" parent="ResultCenter/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.8, 0.82, 1)
+theme_override_colors/font_color = Color(0.3, 0.3, 0.34, 1)
 theme_override_font_sizes/font_size = 16
 text = ""
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="ButtonBox" type="VBoxContainer" parent="ResultCenter/VBox"]
 layout_mode = 2
