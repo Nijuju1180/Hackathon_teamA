@@ -152,6 +152,7 @@ func _on_comment_spawned(comment: FlowingComment) -> void:
 
 ## 画面上でクリックされて消されたコメントを、右側リスト上で削除済み表示に切り替える
 func _on_comment_dismissed(comment: FlowingComment) -> void:
+	Sfx.play(&"cancel")
 	if not is_instance_valid(comment_list):
 		return
 	for i in comment_list.item_count:
