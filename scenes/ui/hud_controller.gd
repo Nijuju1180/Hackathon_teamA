@@ -59,6 +59,9 @@ func _ready() -> void:
 	if is_instance_valid(like_button):
 		like_button.pressed.connect(_on_like_pressed)
 
+	# 6. ゲーム中BGMの開始
+	Bgm.play(&"game")
+
 
 func _process(delta: float) -> void:
 	if _time_up:
