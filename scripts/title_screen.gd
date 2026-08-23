@@ -11,6 +11,7 @@ var _rules_popup: Control = null
 func _ready() -> void:
 	_start_button.pressed.connect(_on_start_pressed)
 	_rules_button.pressed.connect(_on_rules_pressed)
+	Bgm.play(&"title")
 
 
 func _on_start_pressed() -> void:

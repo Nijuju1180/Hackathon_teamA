@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SceneTransition="*res://scripts/scene_transition.gd"
 Sfx="*res://scripts/sfx.gd"
+Bgm="*res://scripts/bgm.gd"
 
 [display]
 

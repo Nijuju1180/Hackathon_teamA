@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 ## 制限時間(秒)。progress_barはこの時間の経過を表示するだけで、手動操作はできない。
-@export_range(10.0, 600.0, 1.0) var time_limit_seconds: float = 100.0
+@export_range(10.0, 600.0, 1.0) var time_limit_seconds: float = 10.0
 ## 配信ヘッダーに表示する視聴者数の初期値・変動幅
 @export var viewer_count_base: int = 128
 @export_range(0.2, 5.0, 0.1) var viewer_count_update_seconds: float = 1.5
@@ -58,6 +58,9 @@ func _ready() -> void:
 	# 5. いいねボタンの接続
 	if is_instance_valid(like_button):
 		like_button.pressed.connect(_on_like_pressed)
+
+	# 6. ゲーム中BGMの開始
+	Bgm.play(&"game")
 
 
 func _process(delta: float) -> void:
