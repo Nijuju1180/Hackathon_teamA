@@ -3,7 +3,7 @@ extends Label
 ## 画面を右から左へ流れる1件のコメント。
 ## 生成・レーン割り当ては CommentLayer が行う。
 
-signal exited(comment: FlowingComment)
+signal exited(comment: FlowingComment, deleted: bool)
 ## クリックされて途中で消されたときに発火する(画面外に流れ切っただけの場合は発火しない)
 signal dismissed(comment: FlowingComment)
 
@@ -20,7 +20,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	position.x -= speed * delta
 	if position.x + size.x < 0.0:
-		exited.emit(self)
+		exited.emit(self, false)
 		queue_free()
 
 
@@ -28,5 +28,11 @@ func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		accept_event()
 		dismissed.emit(self)
-		exited.emit(self)
+		exited.emit(self, true)
 		queue_free()
+
+
+## 時間切れなどで強制的に「生存」扱いにして消す。
+func force_expire() -> void:
+	exited.emit(self, false)
+	queue_free()
