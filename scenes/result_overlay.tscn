@@ -48,14 +48,19 @@ theme_override_font_sizes/font_size = 16
 text = ""
 horizontal_alignment = 1
 
-[node name="RetryButton" type="Button" parent="ResultCenter/VBox"]
+[node name="ButtonBox" type="VBoxContainer" parent="ResultCenter/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 24
+
+[node name="RetryButton" type="Button" parent="ResultCenter/VBox/ButtonBox"]
 custom_minimum_size = Vector2(240, 56)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 20
 text = "もういちど"
 
-[node name="TitleButton" type="Button" parent="ResultCenter/VBox"]
+[node name="TitleButton" type="Button" parent="ResultCenter/VBox/ButtonBox"]
 custom_minimum_size = Vector2(240, 56)
 layout_mode = 2
 size_flags_horizontal = 4
