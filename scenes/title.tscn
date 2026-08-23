@@ -47,14 +47,14 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 48
-text = "コメント削除ゲーム"
+text = "コメント消しゲーム"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="TitleGroup/TitleVBox" unique_id=1946485349]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.75, 0.75, 0.77, 1)
 theme_override_font_sizes/font_size = 16
-text = "(タイトルは仮)"
+text = "~チャンネル育成計画~"
 horizontal_alignment = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1487773945]
